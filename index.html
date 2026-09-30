@@ -285,7 +285,7 @@
   <div class="countdown-bar event-trigger" id="countdownBar" role="button" tabindex="0" aria-label="Ver detalles del evento">
     <div class="countdown-inner">
       <span class="cd-label">Próximo Evento</span>
-      <span class="cd-date">22 Ago 2026</span>
+      <span class="cd-date">28 Nov 2026</span>
       <div class="cd-timer">
         <div class="cd-unit"><span class="num" id="cdDays">00</span><span class="lbl">Días</span></div>
         <span class="cd-colon">:</span>
@@ -333,7 +333,17 @@
   <div class="event-modal-backdrop" id="eventModalBackdrop"></div>
   <div class="event-modal-panel">
     <button class="event-modal-close" id="eventModalClose" aria-label="Cerrar">&times;</button>
-    <img src="assets/event-august22.jpg" alt="Evento BKCC — 22 de agosto de 2026">
+    <div class="event-details">
+      <span class="eyebrow">Gran Exhibición</span>
+      <h2 style="margin:14px 0 6px; font-size:2rem;">Bare Knuckle<br>Combat Championship</h2>
+      <span class="cd-date" style="color:var(--amber); font-size:1rem;">28 de Noviembre, 2026 &middot; 18:00 Horas</span>
+      <p style="color:var(--bone); font-family:var(--display); font-size:1.2rem; text-transform:none; letter-spacing:0.01em; margin-bottom:18px; line-height:1.35;">Fuerza. Valor. Respeto. Solo el más duro sobrevive.</p>
+      <p style="color:var(--bone-dim); margin-bottom:28px;">Ven y vive la verdadera adrenalina. Evento exclusivo, cupo limitado.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 14px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--bone-dim); margin-bottom:30px;">
+        <span>Peleas Reales</span><span>&middot;</span><span>Sin Guantes, Vendas Restringidas</span><span>&middot;</span><span>Solo A Puño Limpio</span><span>&middot;</span><span>Solo Los Mejores</span>
+      </div>
+      <a href="#contact" class="btn btn-primary" id="eventModalContactBtn">¿Preguntas? Contáctanos</a>
+    </div>
   </div>
 </div>
 
@@ -362,7 +372,7 @@
       </div>
       <div class="coming-soon reveal">
         <span class="eyebrow">Primera cartelera confirmada</span>
-        <h2>22 de Agosto, 2026</h2>
+        <h2>28 de Noviembre, 2026</h2>
         <p>Nuestra primera noche de pelea ya está confirmada. Toca abajo para ver todos los detalles, o déjanos tu correo y te mantendremos informado sobre boletos y transmisión.</p>
         <div style="margin-bottom:22px;">
           <button type="button" class="btn btn-primary event-trigger">Ver Detalles del Evento</button>
@@ -599,7 +609,7 @@
 <script>
   // Countdown to the August 22, 2026 event (6:00 PM Mexico City time, UTC-6)
   (function(){
-    const target = new Date("2026-08-22T18:00:00-06:00").getTime();
+    const target = new Date("2026-11-28T18:00:00-06:00").getTime();
     const pad = n => String(n).padStart(2, '0');
     function tick(){
       let diff = target - Date.now();
