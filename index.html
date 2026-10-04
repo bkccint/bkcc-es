@@ -90,7 +90,21 @@
     font-size:1.6rem; cursor:pointer; line-height:1; transition:0.2s;
   }
   .photo-lightbox-close:hover{ background:var(--rust-bright); border-color:var(--rust-bright); }
-  @media (max-width:600px){ .photo-lightbox{ padding:40px 14px; } .photo-lightbox-close{ top:12px; right:12px; width:40px; height:40px; } }
+  .photo-lightbox-nav{
+    position:fixed; top:50%; transform:translateY(-50%); z-index:2; width:52px; height:52px; border-radius:50%;
+    background:rgba(10,9,8,0.8); border:1px solid var(--line); color:var(--bone); font-size:1.7rem;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:0.2s;
+  }
+  .photo-lightbox-nav:hover{ background:var(--rust-bright); border-color:var(--rust-bright); }
+  .photo-lightbox-nav.prev{ left:20px; }
+  .photo-lightbox-nav.next{ right:20px; }
+  @media (max-width:600px){
+    .photo-lightbox{ padding:40px 14px; }
+    .photo-lightbox-close{ top:12px; right:12px; width:40px; height:40px; }
+    .photo-lightbox-nav{ width:42px; height:42px; font-size:1.4rem; }
+    .photo-lightbox-nav.prev{ left:8px; }
+    .photo-lightbox-nav.next{ right:8px; }
+  }
   .event-details{ padding:44px 34px 38px; }
   .event-details .cd-date{ display:block; margin-bottom:20px; }
 
@@ -190,7 +204,10 @@
     display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
     scroll-behavior:smooth; padding-bottom:10px; -webkit-overflow-scrolling:touch;
     scrollbar-width:thin; scrollbar-color:var(--steel) transparent;
+    cursor:grab; user-select:none;
   }
+  .slideshow-track.dragging{ cursor:grabbing; scroll-behavior:auto; scroll-snap-type:none; }
+  .slideshow-track img, .slideshow-track video{ -webkit-user-drag:none; }
   .slideshow-track::-webkit-scrollbar{ height:6px; }
   .slideshow-track::-webkit-scrollbar-track{ background:transparent; }
   .slideshow-track::-webkit-scrollbar-thumb{ background:var(--steel); }
@@ -198,6 +215,10 @@
   .slide img{ width:100%; height:100%; object-fit:cover; filter:grayscale(60%) contrast(1.08); transition:filter 0.3s ease, transform 0.4s ease; display:block; cursor:zoom-in; }
   .slide:hover img{ filter:grayscale(15%) contrast(1.08); transform:scale(1.04); }
   .slide.roster-slide img{ object-position:50% 18%; }
+  .video-slideshow{ margin-top:18px; }
+  .slide.video-slide{ width:360px; aspect-ratio:16/9; }
+  .slide.video-slide video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  @media (max-width:860px){ .slide.video-slide{ width:280px; } }
   .slide-arrow{
     position:absolute; top:50%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%;
     background:rgba(10,9,8,0.8); border:1px solid var(--line); color:var(--bone); font-size:1.3rem;
@@ -364,6 +385,8 @@
 <div class="photo-lightbox" id="photoLightbox">
   <div class="photo-lightbox-backdrop" id="photoLightboxBackdrop"></div>
   <button class="photo-lightbox-close" id="photoLightboxClose" aria-label="Cerrar">&times;</button>
+  <button class="photo-lightbox-nav prev" id="photoLightboxPrev" aria-label="Foto anterior">&#8249;</button>
+  <button class="photo-lightbox-nav next" id="photoLightboxNext" aria-label="Siguiente foto">&#8250;</button>
   <figure class="photo-lightbox-figure">
     <img id="photoLightboxImg" src="" alt="">
   </figure>
@@ -423,12 +446,16 @@
       <p class="roster-note reveal">Las biografías completas y récords de pelea se agregarán en cuanto estén disponibles.</p>
       <div class="slideshow reveal">
         <div class="slideshow-track" id="rosterTrack">
+          <div class="slide roster-slide"><img src="assets/fighter-10.jpg" alt="Peleador de BKCC"></div>
+          <div class="slide roster-slide"><img src="assets/fighter-12.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-1.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-2.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-3.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-4.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-5.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-6.jpg" alt="Peleador de BKCC"></div>
+          <div class="slide roster-slide"><img src="assets/fighter-7.jpg" alt="Peleador de BKCC"></div>
+          <div class="slide roster-slide"><img src="assets/fighter-8.jpg" alt="Peleador de BKCC"></div>
         </div>
         <button class="slide-arrow prev" data-target="rosterTrack" aria-label="Previous">&#8249;</button>
         <button class="slide-arrow next" data-target="rosterTrack" aria-label="Next">&#8250;</button>
@@ -457,9 +484,69 @@
           <div class="slide"><img src="assets/community-10.jpg" alt="Comunidad BKCC"></div>
           <div class="slide"><img src="assets/community-11.jpg" alt="Comunidad BKCC"></div>
           <div class="slide"><img src="assets/community-12.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-13.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-14.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-15.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-16.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-17.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-18.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-19.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-20.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-21.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-22.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-23.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-24.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-25.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-26.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-27.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-28.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-29.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-30.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-31.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-32.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-33.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-34.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-35.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-36.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-37.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-38.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-39.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-40.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-41.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-42.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-43.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-44.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-45.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-46.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-47.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-48.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-49.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-50.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-51.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-52.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-53.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-54.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-55.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-56.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-57.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-58.jpg" alt="Comunidad BKCC"></div>
+          <div class="slide"><img src="assets/community-59.jpg" alt="Comunidad BKCC"></div>
         </div>
         <button class="slide-arrow prev" data-target="communityTrack" aria-label="Previous">&#8249;</button>
         <button class="slide-arrow next" data-target="communityTrack" aria-label="Next">&#8250;</button>
+      </div>
+
+      <div class="slideshow reveal video-slideshow">
+        <div class="slideshow-track" id="communityVideoTrack">
+          <div class="slide video-slide">
+            <video src="assets/community-video-1.mp4" poster="assets/community-video-1-poster.jpg" controls playsinline preload="metadata"></video>
+          </div>
+          <div class="slide video-slide">
+            <video src="assets/community-video-2.mp4" poster="assets/community-video-2-poster.jpg" controls playsinline preload="metadata"></video>
+          </div>
+        </div>
+        <button class="slide-arrow prev" data-target="communityVideoTrack" aria-label="Previous">&#8249;</button>
+        <button class="slide-arrow next" data-target="communityVideoTrack" aria-label="Next">&#8250;</button>
       </div>
     </div>
   </section>
@@ -663,25 +750,62 @@
   })();
 
   // Slideshow arrow controls (Fighters + Community galleries)
+  // Each click now jumps by a full "page" of visible slides, so long galleries
+  // (like Community) take far fewer clicks to get through.
   document.querySelectorAll('.slide-arrow').forEach(btn => {
     btn.addEventListener('click', () => {
       const track = document.getElementById(btn.dataset.target);
       if (!track) return;
-      const slide = track.querySelector('.slide');
-      const step = slide ? slide.getBoundingClientRect().width + 16 : 260;
+      const step = track.clientWidth * 0.9 || 260;
       track.scrollBy({ left: btn.classList.contains('prev') ? -step : step, behavior: 'smooth' });
     });
   });
 
-  // Photo lightbox (Peleadores + Comunidad)
+  // Click-and-drag scrolling for mouse users (touch/trackpad already scroll natively)
+  document.querySelectorAll('.slideshow-track').forEach(track => {
+    // Deshabilita el arrastre nativo de imágenes para que nuestro arrastre personalizado reciba mousemove
+    track.querySelectorAll('img').forEach(img => { img.draggable = false; });
+    let isDown = false, startX = 0, startScroll = 0, dragged = false;
+    track.addEventListener('mousedown', e => {
+      isDown = true;
+      dragged = false;
+      track.classList.add('dragging');
+      startX = e.pageX;
+      startScroll = track.scrollLeft;
+    });
+    window.addEventListener('mouseup', () => { isDown = false; track.classList.remove('dragging'); });
+    window.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      const delta = e.pageX - startX;
+      if (Math.abs(delta) > 4) dragged = true;
+      track.scrollLeft = startScroll - delta;
+    });
+    // Suprime el clic que abriría el lightbox cuando el usuario solo estaba arrastrando
+    track.addEventListener('click', e => { if (dragged) { e.stopPropagation(); e.preventDefault(); } }, true);
+  });
+
+  // Photo lightbox (Peleadores + Comunidad) -- con navegación anterior/siguiente
   (function(){
     const lightbox = document.getElementById('photoLightbox');
     const lightboxImg = document.getElementById('photoLightboxImg');
     const lightboxBackdrop = document.getElementById('photoLightboxBackdrop');
     const lightboxClose = document.getElementById('photoLightboxClose');
-    function openLightbox(src, alt){
-      lightboxImg.src = src;
-      lightboxImg.alt = alt || '';
+    const lightboxPrev = document.getElementById('photoLightboxPrev');
+    const lightboxNext = document.getElementById('photoLightboxNext');
+
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    function showIndex(i){
+      if (!currentGallery.length) return;
+      currentIndex = (i + currentGallery.length) % currentGallery.length;
+      const img = currentGallery[currentIndex];
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || '';
+    }
+    function openLightbox(gallery, index){
+      currentGallery = gallery;
+      showIndex(index);
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -690,12 +814,22 @@
       document.body.style.overflow = '';
       lightboxImg.src = '';
     }
-    document.querySelectorAll('#rosterTrack .slide img, #communityTrack .slide img').forEach(img => {
-      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    ['#rosterTrack', '#communityTrack'].forEach(sel => {
+      const imgs = Array.from(document.querySelectorAll(sel + ' .slide img'));
+      imgs.forEach((img, i) => {
+        img.addEventListener('click', () => openLightbox(imgs, i));
+      });
     });
     if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    if (lightboxPrev) lightboxPrev.addEventListener('click', () => showIndex(currentIndex - 1));
+    if (lightboxNext) lightboxNext.addEventListener('click', () => showIndex(currentIndex + 1));
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') showIndex(currentIndex - 1);
+      else if (e.key === 'ArrowRight') showIndex(currentIndex + 1);
+    });
   })();
 
   const navToggle = document.getElementById('navToggle');
