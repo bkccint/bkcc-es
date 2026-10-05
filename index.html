@@ -435,6 +435,22 @@
     </div>
   </section>
 
+  <section id="contenders">
+    <div class="wrap">
+      <div class="roster-head reveal">
+        <div>
+          <span class="eyebrow">Contendientes</span>
+          <h2 style="margin-top:6px;">Nombres en ascenso en el círculo de BKCC</h2>
+        </div>
+      </div>
+      <div class="slideshow reveal">
+        <div class="slideshow-track" id="contendersTrack">
+          <div class="slide roster-slide"><img src="assets/fighter-10.jpg" alt="Contendiente de BKCC"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="roster">
     <div class="wrap">
       <div class="roster-head reveal">
@@ -446,8 +462,7 @@
       <p class="roster-note reveal">Las biografías completas y récords de pelea se agregarán en cuanto estén disponibles.</p>
       <div class="slideshow reveal">
         <div class="slideshow-track" id="rosterTrack">
-          <div class="slide roster-slide"><img src="assets/fighter-10.jpg" alt="Peleador de BKCC"></div>
-          <div class="slide roster-slide"><img src="assets/fighter-12.jpg" alt="Peleador de BKCC"></div>
+          <div class="slide roster-slide"><img src="assets/fighter-13.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-1.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-2.jpg" alt="Peleador de BKCC"></div>
           <div class="slide roster-slide"><img src="assets/fighter-3.jpg" alt="Peleador de BKCC"></div>
@@ -814,7 +829,7 @@
       document.body.style.overflow = '';
       lightboxImg.src = '';
     }
-    ['#rosterTrack', '#communityTrack'].forEach(sel => {
+    ['#contendersTrack', '#rosterTrack', '#communityTrack'].forEach(sel => {
       const imgs = Array.from(document.querySelectorAll(sel + ' .slide img'));
       imgs.forEach((img, i) => {
         img.addEventListener('click', () => openLightbox(imgs, i));
